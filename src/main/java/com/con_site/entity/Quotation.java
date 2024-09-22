@@ -4,9 +4,16 @@ import javax.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
 @Entity
-@Table(name = "quotations")
 public class Quotation {
     @Id
     private String idQuotation;
@@ -18,65 +25,12 @@ public class Quotation {
     @ManyToOne
     @JoinColumn(name = "idSite")
     private Site site;
-
-    public Quotation() {
-    }
-
-    public Quotation(String idQuotation, String title, LocalDate dateQuotation, BigDecimal totalAmount, String description, Site site) {
-        this.idQuotation = idQuotation;
-        this.title = title;
-        this.dateQuotation = dateQuotation;
-        this.totalAmount = totalAmount;
-        this.description = description;
-        this.site = site;
-    }
-
-    public String getIdQuotation() {
-        return idQuotation;
-    }
-
-    public void setIdQuotation(String idQuotation) {
-        this.idQuotation = idQuotation;
-    }
+    @ManyToOne
+    @JoinColumn(name = "contructor_id")
+    private Constructor constructor;
+    @OneToMany(mappedBy = "quotation")
+    private List<QStatus> qStatuses;
 
 
-    public String getTitle() {
-        return title;
-    }
 
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public LocalDate getDateQuotation() {
-        return dateQuotation;
-    }
-
-    public void setDateQuotation(LocalDate dateQuotation) {
-        this.dateQuotation = dateQuotation;
-    }
-
-    public BigDecimal getTotalAmount() {
-        return totalAmount;
-    }
-
-    public void setTotalAmount(BigDecimal totalAmount) {
-        this.totalAmount = totalAmount;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public Site getSite() {
-        return site;
-    }
-
-    public void setSite(Site site) {
-        this.site = site;
-    }
 }
